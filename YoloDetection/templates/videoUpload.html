@@ -1,0 +1,142 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Detector</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/light.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/dark.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/modal.css' %}"/>
+    <style>
+        .stream{
+            height: 80vh;
+            width: auto;
+            margin: 5vh auto;
+            display: block;
+        }
+    </style>
+</head>
+<body id='body'>
+
+<nav class="navbar navbar-expand-sm navbar-light bg-light" id='navbar'>
+    <a class="navbar-brand" href="#">Detector</a>
+    <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+                <button class="btn btn-outline-light my-2 my-sm-0" 
+                type="button" id='class-choose-btn' style="margin: auto 30px;"
+                data-toggle="modal" data-target="#staticBackdrop">
+                Choose Classes</button>
+            </li>
+            <li class="nav-item">
+            <form class="form-inline my-2 my-lg-0" enctype="multipart/form-data" method="POST" action="" >{% csrf_token %}
+                <input value="" name="selectedClasses" id="slectedClasses" hidden/>    
+                <input class="form-control mr-sm-2" name="videofile" type="file" placeholder="Upload Video" style="padding: 3px 5px"> {% csrf_token %}
+                <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Upload</button>
+            </form>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <a href="/uploadApp/deleteVideo">
+                <button class="btn btn-outline-warning my-2 my-sm-0" type="button" style="margin: auto 30px">Clear All Videos</button>
+            </a>
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="button" style="margin: auto 30px" onClick="switchTheme();">Switch Theme</button>
+        </form>
+
+        <form class="form-inline my-2 my-lg-0" action="/logout">{% csrf_token %}
+            <span style="margin: auto 30px; color: #007bff">Hi, {{request.user.first_name}}</span>
+            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit" formaction="/logout" >Logout</button>
+        </form>
+    </div>
+</nav>
+
+
+<img class="stream" id="stream" src="/uploadApp/stream?id={{video_id}}" alt="" style="width: 90%; max-width: 800px; height: auto;"></br></br>	
+
+<br><br>
+<!-- </p> -->
+
+
+
+<!-- Modal -->
+
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"">
+      <div class="modal-content" style=" width:auto">
+        <div class="modal-header">
+          <h2 class="modal-title" id="staticBackdropLabel">Choose Classes</h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class = "container">
+            <div class="row">
+              <div class="col-12">
+                <!-- <h1>Classes</h1> -->
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <ul>
+                  {% for class in classes %}
+                 <li>
+                    <label class="container">{{class}}
+                      <input type="checkbox" name="{{class}}" class="classSelect" onchange="updateSelectedClass(this)">
+                      <span class="checkmark"></span>
+                    </label>
+                 </li>
+                 {% endfor %}
+                 
+                
+    
+          
+                 </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" onclick="resetClass()">Reset</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <!-- <script>
+        'undefined'=== typeof _trfq || (window._trfq = []);
+        'undefined'=== typeof _trfd && (window._trfd=[]),_trfd.push({'tccl.baseHost':'secureserver.net'}),_trfd.push({'ap':'cpsh'},{'server':'p3plcpnl0769'}) 
+        
+    </script>
+
+    <!-- <script src='https://img1.wsimg.com/tcc/tcc_l.combined.1.0.6.min.js'></script> -->
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="{% static 'js/theme.js' %}"></script>
+    <script src="{% static 'js/chooseClass.js' %}"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
