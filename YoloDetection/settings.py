@@ -41,12 +41,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'authentication',
-    'uploadApp'
+    'uploadApp',
+    # 'storages'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',   
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -155,3 +156,16 @@ MEDIA_URL= "/media/"
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+
+
+
+#S3 BUCKETS CONFIG
+
+# AWS_ACCESS_KEY_ID = 'AKIAZE232T367MPIHREI'
+# AWS_SECRET_ACCESS_KEY = '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'
+# AWS_STORAGE_BUCKET_NAME = 'objectdetectorapp'
+# AWS_S3_FILE_OVERWRITE = False
+# AWS_DEFAULT_ACL = None
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+

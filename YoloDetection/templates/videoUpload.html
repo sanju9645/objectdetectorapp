@@ -68,7 +68,9 @@
 
 
 <!-- Modal -->
-
+<div class="container">
+  <div class="raw">
+   <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"> 
 <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"">
       <div class="modal-content" style=" width:auto">
@@ -112,7 +114,9 @@
       </div>
     </div>
   </div>
-
+</div>
+</div>
+</div>
 
     <!-- <script>
         'undefined'=== typeof _trfq || (window._trfq = []);
@@ -129,6 +133,20 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="{% static 'js/theme.js' %}"></script>
     <script src="{% static 'js/chooseClass.js' %}"></script>
+    <script>
+      $('.modal-content').resizable({
+      //alsoResize: ".modal-dialog",
+      minHeight: 300,
+      minWidth: 300
+    });
+    $('.modal-dialog').draggable();
+
+    $('#myModal').on('show.bs.modal', function() {
+      $(this).find('.modal-body').css({
+        'max-height': '100%'
+      });
+    });
+    </script>
 </body>
 </html>
 

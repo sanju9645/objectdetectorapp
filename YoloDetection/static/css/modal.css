@@ -5,7 +5,12 @@ ul {
   }
 
 
-  
+  @media only screen and (max-width:768px){
+    ul{
+      column-count: 1;
+    }
+  }
+
   
   /* ADDITIONAL STYLING */
   
